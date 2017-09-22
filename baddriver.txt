@@ -1,0 +1,8 @@
+bad 0.0 1.0 0.0 45 2.0 10.0 0.0 10.0 cube.obj
+#model 0.0 1.0 0.0 45 2.0 10.0 0.0 10.0 cube.obj
+model 0.0 1.0 0.0 45 2.0 10.0 0.0 10.0 cube
+model 0.0 1.0 0.0 45 2.0 10.0 0.0 10.0
+model 0.0 cats 0.0 45 2.0 10.0 0.0 10.0 cube.obj
+model 0.0 1.0 0.0 45.6 2.0 10.0 0.0 10.0 cube.obj
+model 0.0 1.0 0.0 45 eric 10.0 0.0 10.0 cube.obj
+model 0.0 1.0 0.0 45 2.0 10.0 0.0 betelgeuse cube.obj
