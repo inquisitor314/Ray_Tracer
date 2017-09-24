@@ -112,7 +112,7 @@ public class ModelReader {
 			   info += "Rotation Axis: ";
 			   info += rotationAxis.toString() + "\n";
 			   info += "Translation: ";
-			   info += translation.toString() + "\n";
+			   info += translation.toString() + "\n\n";
 		return info;
 	}
 	

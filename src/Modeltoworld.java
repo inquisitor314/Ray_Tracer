@@ -9,6 +9,6 @@ public class Modeltoworld {
 		dreader.readFile();
 		System.out.println(dreader.toString());
 		dreader.readModels();
-		dreader.printModels();
+		//dreader.printModels();
 	}
 }

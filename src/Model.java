@@ -24,8 +24,8 @@ public class Model {
 		scale = s;
 		matrix = makeMatrix(v);
 		driverName = dName;
-		writer = new TransformedModelWriter(writePieces, matrix.getData(), driverName);
-		writer.write();
+		writer = new TransformedModelWriter(writePieces, matrix.getData(), driverName, fileName);
+		calculate();
 	}
 	
 	public String toString() {
@@ -40,6 +40,24 @@ public class Model {
 		return name;
 	}
 
+	private void calculate() {
+		makeRotationAxisUnitLength();
+		writer.write();
+	}
+	private void makeRotationAxisUnitLength() {
+		double magnitude = Math.sqrt(Math.pow(rotationAxis.get(0), 2) + Math.pow(rotationAxis.get(1), 2) + Math.pow(rotationAxis.get(2), 2));
+//		System.out.println("Magnitude before normalizing: " + magnitude);
+		for(int i = 0; i < 3; i++) {
+			rotationAxis.set(i, (rotationAxis.get(i) / magnitude));
+		}
+//		Test if rotation axis is unit length
+//		for(double d : rotationAxis) {
+//			System.out.println(d);
+//		}
+//		double newMag = Math.sqrt(Math.pow(rotationAxis.get(0), 2) + Math.pow(rotationAxis.get(1), 2) + Math.pow(rotationAxis.get(2), 2));
+//		System.out.println("Magnitude after normalizing: " + newMag);
+	}
+	
 	private RealMatrix makeMatrix(ArrayList<Double[]> vectorList) {
 		double[][] matrixData = new double[vectorList.size()][3];
 		for(int i = 0; i < vectorList.size(); i++) {
