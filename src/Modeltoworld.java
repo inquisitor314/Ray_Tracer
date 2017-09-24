@@ -8,5 +8,7 @@ public class Modeltoworld {
 		DriverReader dreader = new DriverReader(args[0]);
 		dreader.readFile();
 		System.out.println(dreader.toString());
+		dreader.readModels();
+		dreader.printModels();
 	}
 }
