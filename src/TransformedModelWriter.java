@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,21 +20,21 @@ public class TransformedModelWriter {
 	public void write() {
 		String folderName = driverName.substring(0, driverName.indexOf("."));
 		File currentDirectory = new File("");
-		File newDirectory = new File(currentDirectory.getAbsolutePath() + "\\" + folderName);
+		File newDirectory = new File(currentDirectory.getAbsolutePath() + "/" + folderName);
 		if(!newDirectory.exists()) {
 			System.out.println("Making directory " + newDirectory.getAbsolutePath());
 			newDirectory.mkdir();
 		}
 		String newFileName = findValidName(newDirectory);
-		File newFile = new File(newDirectory.getAbsolutePath() + "\\" + newFileName);
+		File newFile = new File(newDirectory.getAbsolutePath() + "/" + newFileName);
 		try {
 			PrintWriter writer = new PrintWriter(newFile, "UTF-8");
 			int count = 0;
 			for(String s : writePieces) {
 				if(isInt(s)) {
 					String vectorLine = "v ";
-					for(double d : matrix[count]) {
-						vectorLine += d;
+					for(int i = 0; i < 3; i++) {
+						vectorLine += String.format("%.7f", matrix[count][i]);
 						vectorLine += " ";
 					}
 					vectorLine = vectorLine.substring(0, vectorLine.length());
