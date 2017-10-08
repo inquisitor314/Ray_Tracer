@@ -23,7 +23,7 @@ public class DriverReader {
 				if(!isComment(line)) {
 					String[] linePieces = line.split(" ");
 					if(validModelInfo(linePieces, numObjects)) {
-						models.add(new ModelReader(linePieces));
+						models.add(new ModelReader(linePieces, driverName));
 					}
 				}
 				numObjects++;
@@ -93,7 +93,7 @@ public class DriverReader {
 	}
 	
 	private boolean isComment(String line) {
-		if(line.contains("#")) {
+		if(line.charAt(0) == '#') {
 			return true;
 		}
 		return false;
@@ -106,4 +106,21 @@ public class DriverReader {
 		}
 		return modelInfo;
 	}
+	
+	public void printModels() {
+		for(ModelReader m : models) {
+			m.printModel();
+		}
+	}
+	
+	public boolean readModels() {
+		boolean allGood = true;
+		for(ModelReader m : models) {
+			if(!m.readObjectFile()) {
+				allGood = false;
+			}
+		}
+		return allGood;
+	}
+	
 }
