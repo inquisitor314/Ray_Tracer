@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
-public class FaceModel {
+public class FaceModel extends Model{
 
 	private ArrayList<Double> rotationAxis;
 	private ArrayList<Double> translation;
