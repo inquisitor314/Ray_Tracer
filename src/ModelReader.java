@@ -10,10 +10,12 @@ public class ModelReader {
 	private ArrayList<Double> translation;
 	private ArrayList<String> writePieces;
 	private ArrayList<Double[]> vectors;
+	private ArrayList<Integer[]> faces;
 	private String fileName;
 	private String driverName;
 	private int theta;
 	private int numVectors;
+	private int numFaces;
 	private double scale;
 	private FaceModel model;
 	private String comment;
@@ -23,7 +25,9 @@ public class ModelReader {
 		writePieces = new ArrayList<String>();
 		rawParts = new ArrayList<String>();
 		vectors = new ArrayList<Double[]>();
+		faces = new ArrayList<Integer[]>();
 		numVectors = 0;
+		numFaces = 0;
 		for(String s : linePieces) {
 			rawParts.add(s);
 		}
@@ -52,6 +56,13 @@ public class ModelReader {
 						writePieces.add(line);
 					}
 					else if(isFace(line)) {
+						numFaces++;
+						String[] linePieces = line.split(" ");
+						Integer face[] = new Integer[3];
+						face[0] = Integer.parseInt(Character.toString(linePieces[1].charAt(0)));
+						face[1] = Integer.parseInt(Character.toString(linePieces[2].charAt(0)));
+						face[2] = Integer.parseInt(Character.toString(linePieces[3].charAt(0)));
+						faces.add(face);
 						
 					}
 					else {
