@@ -53,7 +53,7 @@ public class TransformedModelWriter {
 	}
 	
 	private String findValidName(File driverDirectory) {
-		String extension = ".obj";
+		String extension = ".ppm";
 		String prefix = modelName.substring(0, modelName.indexOf(".")) + "_mw";
 		int numDuplicates = 0;
 		String[] files = driverDirectory.list();

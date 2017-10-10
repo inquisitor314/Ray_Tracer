@@ -15,7 +15,7 @@ public class ModelReader {
 	private int theta;
 	private int numVectors;
 	private double scale;
-	private Model model;
+	private FaceModel model;
 	private String comment;
 	
 	public ModelReader(String[] linePieces, String dName) {
@@ -78,10 +78,10 @@ public class ModelReader {
 	}
 	
 	private void makeModel() {
-		model = new Model(rotationAxis, translation, writePieces, vectors, fileName, theta, scale, driverName);
+		model = new FaceModel(rotationAxis, translation, writePieces, vectors, fileName, theta, scale, driverName);
 	}
 	
-	public Model getModel() {
+	public FaceModel getModel() {
 		return model;
 	}
 	private boolean isVector(String line) {

@@ -7,10 +7,12 @@ public class DriverReader {
 
 	String driverName;
 	ArrayList<ModelReader> models;
+	Camera camera;
 	
 	public DriverReader(String driverName) {
 		this.driverName = driverName;
 		models = new ArrayList<ModelReader>();
+		camera = new Camera();
 	}
 	
 	public boolean readFile() {
@@ -21,12 +23,62 @@ public class DriverReader {
 			while(driver.hasNextLine()) {
 				String line = driver.nextLine();
 				if(!isComment(line)) {
-					String[] linePieces = line.split(" ");
-					if(validModelInfo(linePieces, numObjects)) {
-						models.add(new ModelReader(linePieces, driverName));
+					if(isEye(line)) {
+						if(!camera.setEye(line.substring(4))) {
+							//System.out.println("Eye: " + line.substring(4));
+							System.out.println("ERROR: Invalid eye definition.");
+							driver.close();
+							return false;
+						}
 					}
-				}
-				numObjects++;
+					else if(isLook(line)) {
+						if(!camera.setLook(line.substring(5))) {
+							//System.out.println("Look: " + line.substring(5));
+							System.out.println("ERROR: Invalid look vector definition.");
+							driver.close();
+							return false;
+						}
+					}
+					else if(isUp(line)) {
+						if(!camera.setUp(line.substring(3))) {
+							//System.out.println("Up Vector: " + line.substring(3));
+							System.out.println("ERROR: Invalid up vector definition.");
+							driver.close();
+							return false;
+						}
+					}
+					else if(isD(line)) {
+						if(!camera.setFLength(line.substring(2))) {
+							//System.out.println("Focal Length: " + line.substring(2));
+							System.out.println("ERROR: Invalid focal length definition.");
+							driver.close();
+							return false;
+						}
+					}
+					else if(isBounds(line)) {
+						if(!camera.setBounds(line.substring(7))) {
+							//System.out.println("Bounds: " + line.substring(7));
+							System.out.println("ERROR: Invalid bounds definition.");
+							driver.close();
+							return false;
+						}
+					}
+					else if(isResolution(line)) {
+						if(!camera.setResolution(line.substring(4))) {
+							//System.out.println("Resolution: " + line.substring(4));
+							System.out.println("ERROR: Invalid resolution definition.");
+							driver.close();
+							return false;
+						}
+					}
+					else {
+						String[] linePieces = line.split(" ");
+						if(validModelInfo(linePieces, numObjects)) {
+							models.add(new ModelReader(linePieces, driverName));
+							numObjects++;
+						}
+					}
+				}	
 			}
 			driver.close();
 		} catch (FileNotFoundException e) {
@@ -36,6 +88,8 @@ public class DriverReader {
 		return true;
 	}
 	
+	
+
 	private boolean validModelInfo(String[] linePieces, int numObjects) {
 		if(linePieces.length != 10) {
 			System.out.println("ERROR on line " + numObjects +": object definition isn't the correct length.");
@@ -72,6 +126,48 @@ public class DriverReader {
 		return true;
 	}
 	
+	private boolean isEye(String line) {
+		if(line.charAt(0) == 'e') {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isLook(String line) {
+		if(line.charAt(0) == 'l') {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isUp(String line) {
+		if(line.charAt(0) == 'u') {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isD(String line) {
+		if(line.charAt(0) == 'd') {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isBounds(String line) {
+		if(line.charAt(0) == 'b') {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isResolution(String line) {
+		if(line.charAt(0) == 'r') {
+			return true;
+		}
+		return false;
+	}
+	
 	private boolean isDouble(String piece) {
 		try {
 			double tempNum = Double.parseDouble(piece);
@@ -100,11 +196,12 @@ public class DriverReader {
 	}
 	
 	public String toString() {
-		String modelInfo = "Models from " + driverName + "\n";
+		String cameraInfo = "Camera info: \n" + camera.toString() + "\n";
+		String modelInfo = "Models from " + driverName + ":\n";
 		for(ModelReader m : models) {
 			modelInfo += m.toString();
 		}
-		return modelInfo;
+		return cameraInfo + modelInfo;
 	}
 	
 	public void printModels() {

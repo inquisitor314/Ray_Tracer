@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
-public class Model {
+public class FaceModel {
 
 	private ArrayList<Double> rotationAxis;
 	private ArrayList<Double> translation;
@@ -15,7 +15,7 @@ public class Model {
 	private TransformedModelWriter writer;
 	private String driverName;
 	
-	public Model(ArrayList<Double> rA, ArrayList<Double> t, ArrayList<String> wP, ArrayList<Double[]> v, String fN, int th, double s, String dName) {
+	public FaceModel(ArrayList<Double> rA, ArrayList<Double> t, ArrayList<String> wP, ArrayList<Double[]> v, String fN, int th, double s, String dName) {
 		rotationAxis = rA;
 		translation = t;
 		writePieces = wP;
@@ -127,8 +127,8 @@ public class Model {
 		int smallest = 0;
 		Double term = axis.get(0);
 		for(int i = 1; i < 3; i++) {
-			if(axis.get(i) < term) {
-				term = axis.get(i);
+			if(Math.abs(axis.get(i)) < term) {
+				term = Math.abs(axis.get(i));
 				smallest = i;
 			}
 		}
