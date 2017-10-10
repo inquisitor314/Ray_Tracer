@@ -48,8 +48,11 @@ public class ModelReader {
 			while(driver.hasNextLine()) {
 				String line = driver.nextLine();
 				if(!isGarbage(line)) {
-					if(!isVector(line)) {
+					if(isComment(line)) {
 						writePieces.add(line);
+					}
+					else if(isFace(line)) {
+						
 					}
 					else {
 						writePieces.add("" + numVectors);
@@ -84,6 +87,14 @@ public class ModelReader {
 	public FaceModel getModel() {
 		return model;
 	}
+	
+	private boolean isFace(String line){
+		if(!isGarbage(line) && line.charAt(0) == 'f'){
+			return true;
+		}
+		return false;
+	}
+	
 	private boolean isVector(String line) {
 		if(!isGarbage(line) && line.charAt(0) == 'v') {
 			return true;
@@ -125,6 +136,7 @@ public class ModelReader {
 	public void printModel() {
 		System.out.println(model.toString());
 	}
+	
 	private void addComment() {
 		int lastComment = 0;
 		for(String s : writePieces) {
@@ -136,5 +148,12 @@ public class ModelReader {
 			}
 		}
 		writePieces.add(lastComment, comment);
+	}
+	
+	private boolean isComment(String line) {
+		if(line.charAt(0) == '#') {
+			return true;
+		}
+		return false;
 	}
 }
